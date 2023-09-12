@@ -96,6 +96,7 @@ function listarPedidos(){
         `
         listaPedidos.innerHTML += pedidoDisplay;
     });
+    contador()
 }
 
 
@@ -141,12 +142,17 @@ function editarPedido() {
     document.getElementById('btnAtualizar').classList.add('hidden');
     document.getElementById('btnCriar').classList.remove('hidden');
     sendMSG('Pedido atualizado com sucesso', 'success');
+    contador()
 
 }
 
 function deletarPedido(id) {
     pedidoLista.deletarPedido(id);
     listarPedidos();
+    clearInputs();
     sendMSG('Pedido deletado com sucesso', 'success');
-    document.getElementById('amount').innerHTML  - 1;
+    contador()
+}
+function contador(){
+    document.getElementById('amount').innerHTML = pedidoLista.listarPedidos().length;
 }
