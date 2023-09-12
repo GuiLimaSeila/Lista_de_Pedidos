@@ -1,45 +1,45 @@
 
 
-class Pedido{
-    constructor(cliente, mesa, descricao){
+class Pedido {
+    constructor(cliente, mesa, descricao) {
         this.cliente = cliente;
         this.mesa = mesa;
         this.descricao = descricao;
         this.id = this.gerarId();
     }
-    gerarId(){
+    gerarId() {
         return Math.floor(Math.random() * 10000);
     }
 }
 
-class PedidoLista{
-    constructor(){
+class PedidoLista {
+    constructor() {
         this.pedidos = [];
     }
-    
-    addPedido(pedido){
-        if(getInputs() == false){
-sendMSG('Preencha todos os campos', 'error');
-    } else{
-        this.pedidos.push(pedido);
-        sendMSG('Pedido adicionado com sucesso', 'success');
-        document.getElementById('amount').innerHTML = pedidoLista.listarPedidos().length;
-        clearInputs();
+
+    addPedido(pedido) {
+        if (getInputs() == false) {
+            sendMSG('Preencha todos os campos', 'error');
+        } else {
+            this.pedidos.push(pedido);
+            sendMSG('Pedido adicionado com sucesso', 'success');
+            document.getElementById('amount').innerHTML = pedidoLista.listarPedidos().length;
+            clearInputs();
+        }
     }
-    }
-    listarPedidos(){
+    listarPedidos() {
         return this.pedidos;
     }
-    listarPedidosporId(id){
+    listarPedidosporId(id) {
         return this.pedidos.find(pedido => pedido.id === id);
     }
     deletarPedido(id) {
-        return(this.pedidos = this.pedidos.filter(
+        return (this.pedidos = this.pedidos.filter(
             (pedido) => pedido.id != id
-            ));
-        }
+        ));
+    }
 
-    updatePedido(id, cliente, mesa, descricao){
+    updatePedido(id, cliente, mesa, descricao) {
         const pedido = this.listarPedidosporId(id);
         pedido.cliente = cliente;
         pedido.mesa = mesa;
@@ -48,26 +48,26 @@ sendMSG('Preencha todos os campos', 'error');
         return pedido;
     }
 }
-function clearInputs(){
+function clearInputs() {
     const cliente = document.getElementById('client').value = '';
     const mesa = document.getElementById('table').value = '';
     const descricao = document.getElementById('description').value = '';
 }
 
-function getInputs(){
+function getInputs() {
     const cliente = document.getElementById('client').value;
     const mesa = document.getElementById('table').value;
     const descricao = document.getElementById('description').value;
-    if(cliente == "" || mesa == "" || descricao == ""){
+    if (cliente == "" || mesa == "" || descricao == "") {
         return false;
-    }else{
+    } else {
         return true
     }
 }
 
 const pedidoLista = new PedidoLista();
 
-function criarPedido(){
+function criarPedido() {
     const cliente = document.getElementById('client').value;
     const mesa = document.getElementById('table').value;
     const descricao = document.getElementById('description').value;
@@ -77,7 +77,7 @@ function criarPedido(){
     listarPedidos()
 }
 
-function listarPedidos(){
+function listarPedidos() {
     const pedidos = pedidoLista.listarPedidos();
     let listaPedidos = document.getElementById('request-area');
     listaPedidos.innerHTML = '';
@@ -100,7 +100,7 @@ function listarPedidos(){
 }
 
 
-function sendMSG(msg, type){
+function sendMSG(msg, type) {
     let msgDiv = document.getElementById("msg");
     msgDiv.innerHTML = '';
 
@@ -119,7 +119,7 @@ let aux = null;
 function atualizarPedido(id) {
     const pedido = pedidoLista.listarPedidosporId(id);
 
-    document.getElementById('client').value = pedido.cliente;   
+    document.getElementById('client').value = pedido.cliente;
     document.getElementById('table').value = pedido.mesa;
     document.getElementById('description').value = pedido.descricao;
 
@@ -153,6 +153,6 @@ function deletarPedido(id) {
     sendMSG('Pedido deletado com sucesso', 'success');
     contador()
 }
-function contador(){
+function contador() {
     document.getElementById('amount').innerHTML = pedidoLista.listarPedidos().length;
 }
