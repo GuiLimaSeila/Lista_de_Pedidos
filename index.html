@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/style.index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos</title>
+</head>
+<body>
+    <main>
+        <div id="inputs-area">
+            <h2>Cadastro de Pedidos</h2>
+            <input type="text" placeholder="Cliente" id="client">
+            <input type="number" placeholder="Mesa" id="table">
+            <input type="text" placeholder="Descrição" id="description">
+            <button onclick="criarPedido()">Cadastrar</button>
+            <p id="msg"></p>
+        </div>
+        <div id="table-area">
+            <h2 id="amount">Lista de Pedidos - </h2>
+        </div>
+    </main>
+    <script src="assets/js/script.index.js"></script>
+</body>
+</html>
