@@ -13,11 +13,13 @@
             <input type="text" placeholder="Cliente" id="client">
             <input type="number" placeholder="Mesa" id="table">
             <input type="text" placeholder="Descrição" id="description">
-            <button onclick="criarPedido()">Cadastrar</button>
+            <button onclick="criarPedido()" id="btnCriar">Cadastrar</button>
+            <button onclick="editarPedido()" class="hidden" id="btnAtualizar">Editar</button>
             <p id="msg"></p>
         </div>
         <div id="table-area">
-            <h2 id="amount">Lista de Pedidos - </h2>
+            <h2 >Lista de Pedidos - <h2 id="amount">0</h2></h2>
+            <div id="request-area"></div>
         </div>
     </main>
     <script src="assets/js/script.index.js"></script>

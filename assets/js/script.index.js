@@ -1,4 +1,4 @@
-console.log("test");
+
 
 class Pedido{
     constructor(cliente, mesa, descricao){
@@ -8,7 +8,7 @@ class Pedido{
         this.id = this.gerarId();
     }
     gerarId(){
-        return Math.floor(Math.random() * 1000);
+        return Math.floor(Math.random() * 10000);
     }
 }
 
@@ -22,23 +22,32 @@ class PedidoLista{
 sendMSG('Preencha todos os campos', 'error');
     } else{
         this.pedidos.push(pedido);
+        sendMSG('Pedido adicionado com sucesso', 'success');
+        document.getElementById('amount').innerHTML = pedidoLista.listarPedidos().length;
         clearInputs();
-        console.log(pedido);
     }
     }
-    removePedido(id){
-        this.pedidos = this.pedidos.filter(pedido => pedido.id !== id);
+    listarPedidos(){
+        return this.pedidos;
     }
-    updatePedido(id, pedido){
-        this.pedidos = this.pedidos.map(pedido => {
-            if(pedido.id === id){
-                return pedido;
-            }
-            return pedido;
-        });
+    listarPedidosporId(id){
+        return this.pedidos.find(pedido => pedido.id === id);
+    }
+    deletarPedido(id) {
+        return(this.pedidos = this.pedidos.filter(
+            (pedido) => pedido.id != id
+            ));
+        }
+
+    updatePedido(id, cliente, mesa, descricao){
+        const pedido = this.listarPedidosporId(id);
+        pedido.cliente = cliente;
+        pedido.mesa = mesa;
+        pedido.descricao = descricao;
+
+        return pedido;
     }
 }
-
 function clearInputs(){
     const cliente = document.getElementById('client').value = '';
     const mesa = document.getElementById('table').value = '';
@@ -65,9 +74,30 @@ function criarPedido(){
     const pedido = new Pedido(cliente, mesa, descricao);
 
     pedidoLista.addPedido(pedido);
-
-    console.log(pedidoLista.pedidos);
+    listarPedidos()
 }
+
+function listarPedidos(){
+    const pedidos = pedidoLista.listarPedidos();
+    let listaPedidos = document.getElementById('request-area');
+    listaPedidos.innerHTML = '';
+    pedidos.forEach(pedido => {
+        const pedidoDisplay = `
+        <div class="card">
+        <p>ID: ${pedido.id}</p>
+           <p>Cliente: ${pedido.cliente}</p>
+           <p>Mesa: ${pedido.mesa}</p>
+           <p>Descrição: ${pedido.descricao}</p>
+           <div class="btns">
+           <button class="editBtn" onclick="atualizarPedido(${pedido.id})">Editar</button>
+           <button class="deletBtn" onclick="deletarPedido(${pedido.id})">Excluir</button>
+           </div>
+        </div>
+        `
+        listaPedidos.innerHTML += pedidoDisplay;
+    });
+}
+
 
 function sendMSG(msg, type){
     let msgDiv = document.getElementById("msg");
@@ -81,4 +111,42 @@ function sendMSG(msg, type){
     setTimeout(function () {
         msgDiv.innerHTML = '';
     }, 4000);
+}
+
+let aux = null;
+
+function atualizarPedido(id) {
+    const pedido = pedidoLista.listarPedidosporId(id);
+
+    document.getElementById('client').value = pedido.cliente;   
+    document.getElementById('table').value = pedido.mesa;
+    document.getElementById('description').value = pedido.descricao;
+
+    document.getElementById('btnAtualizar').classList.remove('hidden');
+    document.getElementById('btnCriar').classList.add('hidden');
+
+    aux = id;
+}
+
+function editarPedido() {
+    const cliente = document.getElementById('client').value;
+    const mesa = document.getElementById('table').value;
+    const descricao = document.getElementById('description').value;
+
+    pedidoLista.updatePedido(aux, cliente, mesa, descricao);
+
+    listarPedidos();
+    clearInputs
+
+    document.getElementById('btnAtualizar').classList.add('hidden');
+    document.getElementById('btnCriar').classList.remove('hidden');
+    sendMSG('Pedido atualizado com sucesso', 'success');
+
+}
+
+function deletarPedido(id) {
+    pedidoLista.deletarPedido(id);
+    listarPedidos();
+    sendMSG('Pedido deletado com sucesso', 'success');
+    document.getElementById('amount').innerHTML  - 1;
 }
